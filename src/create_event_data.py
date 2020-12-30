@@ -43,7 +43,7 @@ class CreateEventData:
             temp_df = temp_df.astype(self.data_types)
 
             return_df = return_df.append(temp_df, ignore_index=True)
-            print(f"Processed {idx} / {len(self.csv_path_list)} .csv files")
+            logger.debug(f"Processed {idx} / {len(self.csv_path_list)} .csv files")
 
         return return_df, self.df_to_list_of_tuples(return_df)
 

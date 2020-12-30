@@ -7,5 +7,7 @@ dependencies:
   - pip:
       - -e .  # executes setup.py -> 'src' becomes a (local) package
       - cassandra-driver==3.24.0
+      - matplotlib==3.3.3
       - pytest==6.2.1
       - python-dotenv==0.15.0
+      - seaborn==0.11.1
