@@ -28,7 +28,7 @@ class CreateEventData:
 
     def data_pipeline(self) -> list:
         """
-        - transforms raw .csv to a Pandas DataFrame
+        - transforms .csv file to a Pandas DataFrame
         - check if the target columns are present in the dataframe, if so, returns only those
         - converts the data to the correct data types
         - appends all dataframes to a single dataframe
