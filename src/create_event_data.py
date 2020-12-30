@@ -9,7 +9,6 @@ class CreateEventData:
     Contains all methods and attributes to transform and combine raw .csv files to a new dataset,
     ready for insertion in the Cassandra database.
     """
-
     def __init__(self, csv_path_list: str):
         self.target_columns = ['artist', 'firstName', 'gender', 'itemInSession', 'lastName', 'length',
                                'level', 'location', 'sessionId', 'song', 'userId', 'page']
@@ -36,7 +35,7 @@ class CreateEventData:
         """
         logger.info("Data pipeline started...")
 
-        return_df = pd.DataFrame(self.target_columns[:-1])
+        return_df = pd.DataFrame(columns=self.target_columns[:-1])
 
         for idx, csv_file in enumerate(self.csv_path_list, start=1):
             temp_df = self.csv_to_df(csv_file)
@@ -46,7 +45,7 @@ class CreateEventData:
             return_df = return_df.append(temp_df, ignore_index=True)
             print(f"Processed {idx} / {len(self.csv_path_list)} .csv files")
 
-        return self.df_to_list_of_tuples(return_df)
+        return return_df, self.df_to_list_of_tuples(return_df)
 
     @staticmethod
     def csv_to_df(file_path: str) -> pd.DataFrame:
@@ -64,12 +63,12 @@ class CreateEventData:
         """
         Assert whether the target columns are present in the dataframe.
         """
-        df_columns = [x.lower() for x in df.columns]
-        target_columns = [x.lower() for x in self.target_columns]
-        found_cols = [x for x in target_columns if x in df_columns]
+        df_columns_low = [x.lower() for x in df.columns]
+        target_columns_low = [x.lower() for x in self.target_columns]
+        found_cols = [x for x in target_columns_low if x in df_columns_low]
 
         try:
-            sorted(found_cols) == sorted(target_columns)
+            sorted(found_cols) == sorted(target_columns_low)
         except AssertionError:
             logger.exception(f"ERROR the target columns and df columns do not match")
         else:
