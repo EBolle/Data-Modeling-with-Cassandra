@@ -1,3 +1,4 @@
+"""This module takes take of transforming raw .csv files to a clean Pandas DataFrame."""
 
 
 from logger import logger
@@ -9,6 +10,7 @@ class CreateEventData:
     Contains all methods and attributes to transform and combine raw .csv files to a new dataset,
     ready for insertion in the Cassandra database.
     """
+
     def __init__(self, csv_path_list: str):
         self.target_columns = ['artist', 'firstName', 'gender', 'itemInSession', 'lastName', 'length',
                                'level', 'location', 'sessionId', 'song', 'userId', 'page']
@@ -40,12 +42,16 @@ class CreateEventData:
         for idx, csv_file in enumerate(self.csv_path_list, start=1):
             temp_df = self.csv_to_df(csv_file)
             temp_df = self.assert_target_columns(temp_df)
-            temp_df = temp_df.astype(self.data_types)
 
             return_df = return_df.append(temp_df, ignore_index=True)
             logger.debug(f"Processed {idx} / {len(self.csv_path_list)} .csv files")
 
-        return return_df, self.df_to_list_of_tuples(return_df)
+        try:
+            return_df = return_df.astype(self.data_types)
+        except Exception:
+            logger.exception("ERROR while casting columns to a specific type")
+        else:
+            return return_df
 
     @staticmethod
     def csv_to_df(file_path: str) -> pd.DataFrame:
@@ -73,16 +79,3 @@ class CreateEventData:
             logger.exception(f"ERROR the target columns and df columns do not match")
         else:
             return df.loc[df['page'] == 'NextSong', self.target_columns[:-1]]
-
-    @staticmethod
-    def df_to_list_of_tuples(df: pd.DataFrame) -> list:
-        """
-        Converts the appended dataframe to a list of tuples with standard python dtypes, necessary for insertion
-        into the Cassandra database.
-        """
-        try:
-            new_event_data = [tuple(row) for row in df.itertuples(index=False)]
-        except Exception:
-            logger.exception("ERROR while converting the appended dataframe to a list of tuples")
-        else:
-            return new_event_data
