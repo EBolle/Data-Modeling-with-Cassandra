@@ -1,4 +1,8 @@
-"""Helper function to collect a list of .csv files."""
+"""Helper functions for various steps in the overall process."""
+
+
+from cassandra.cluster import Cluster
+import pandas as pd
 
 
 def create_csv_path_list(file_path: str) -> list:
@@ -15,3 +19,35 @@ def create_csv_path_list(file_path: str) -> list:
     print(f"{file_path} contains {len(return_list)} .csv files.")
 
     return return_list
+
+
+def create_database():
+    """
+    - Creates a connection to a local Cassandra instance
+    - Create the udacity keyspace within the Cassandra instance
+    - Returns the cluster and session
+    """
+    cluster = Cluster(['127.0.0.1'])
+    session = cluster.connect()
+
+    session.execute("""
+    CREATE KEYSPACE IF NOT EXISTS udacity 
+    WITH REPLICATION = 
+    { 'class' : 'SimpleStrategy', 'replication_factor' : 1 }"""
+    )
+    session.set_keyspace('udacity')
+
+    return session, cluster
+
+
+def unique_key_check(df: pd.DataFrame, keys: list) -> pd.DataFrame:
+    """
+    Returns TRUE when the combination of keys is unique, these keys can then be used as primary index.
+    """
+    assert all([item in df.columns for item in keys]), """The keys are not present in the columns of df,
+                                                          please check again."""
+
+    keys_rows = df.groupby(keys).size().reset_index().shape[0]
+    df_rows = df.shape[0]
+
+    return keys_rows == df_rows
