@@ -27,13 +27,12 @@ class CreateEventData:
                            'song': str,
                            'userId': int}
 
-    def data_pipeline(self) -> list:
+    def data_pipeline(self) -> pd.DataFrame:
         """
         - transforms .csv file to a Pandas DataFrame
         - check if the target columns are present in the dataframe, if so, returns only those
         - converts the data to the correct data types
-        - appends all dataframes to a single dataframe
-        - transform the combined dataframe to a list of tuples, ready for insertion in the Cassandra database
+        - appends all dataframes and returns a single dataframe
         """
         logger.info("Data pipeline started...")
 
