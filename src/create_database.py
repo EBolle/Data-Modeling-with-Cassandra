@@ -58,17 +58,17 @@ class CreateDatabase:
     def drop_tables(self) -> None:
         logger.info("Dropping tables if exists")
 
-        for query in self.drop_queries:
+        for idx, query in enumerate(self.drop_queries):
             try:
                 self.session.execute(query)
             except Exception:
-                logger.exception("ERROR while dropping tables")
+                logger.exception(f"ERROR while dropping table at index {idx}")
 
     def create_tables(self) -> None:
         logger.info("Creating tables")
 
-        for query in self.create_queries:
+        for idx, query in enumerate(self.create_queries):
             try:
                 self.session.execute(query)
             except Exception:
-                logger.exception("ERROR while creating tables")
+                logger.exception(f"ERROR while creating table at index {idx}")

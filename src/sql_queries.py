@@ -40,14 +40,14 @@ last_name text,
 song text,
 session_id int,
 item_in_session int,
-PRIMARY KEY (song, session_id, session_id, item_in_session)
+PRIMARY KEY (song, session_id, item_in_session)
 )
 """
 
 # INSERT
 
 session_info_insert = """
-INSERT INTO song_length (artist, song, song_length, session_id, item_in_session)
+INSERT INTO session_info (artist, song, song_length, session_id, item_in_session)
 VALUES (%s, %s, %s, %s, %s)
 """
 
