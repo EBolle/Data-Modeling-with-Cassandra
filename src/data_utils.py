@@ -24,8 +24,8 @@ def unique_key_check(df: pd.DataFrame, keys: list) -> pd.DataFrame:
     """
     Returns TRUE when the combination of keys is unique, these keys can then be used as primary index.
     """
-    assert all([item in df.columns for item in keys]), """The keys are not present in the columns of df,
-                                                          please check again."""
+    if not all([item in df.columns for item in keys]):
+        raise ValueError("The keys are not present in the columns of df, please check again.")
 
     keys_rows = df.groupby(keys).size().reset_index().shape[0]
     df_rows = df.shape[0]
