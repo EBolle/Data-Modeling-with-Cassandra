@@ -1,7 +1,6 @@
 """Helper functions for various steps in the overall process."""
 
 
-from cassandra.cluster import Cluster
 import pandas as pd
 
 
@@ -19,25 +18,6 @@ def create_csv_path_list(file_path: str) -> list:
     print(f"{file_path} contains {len(return_list)} .csv files.")
 
     return return_list
-
-
-def create_database():
-    """
-    - Creates a connection to a local Cassandra instance
-    - Create the udacity keyspace within the Cassandra instance
-    - Returns the cluster and session
-    """
-    cluster = Cluster(['127.0.0.1'])
-    session = cluster.connect()
-
-    session.execute("""
-    CREATE KEYSPACE IF NOT EXISTS udacity 
-    WITH REPLICATION = 
-    { 'class' : 'SimpleStrategy', 'replication_factor' : 1 }"""
-    )
-    session.set_keyspace('udacity')
-
-    return session, cluster
 
 
 def unique_key_check(df: pd.DataFrame, keys: list) -> pd.DataFrame:
