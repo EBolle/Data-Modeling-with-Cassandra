@@ -1,6 +1,6 @@
 ## Speed is of the essence 
 
-<img src="https://images.pexels.com/photos/290470/pexels-photo-290470.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
+<img src="https://images.pexels.com/photos/290470/pexels-photo-290470.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800">
 
 Source: https://www.pexels.com
 
