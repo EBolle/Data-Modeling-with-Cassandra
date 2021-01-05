@@ -2,9 +2,10 @@
 
 
 import pandas as pd
+import pathlib
 
 
-def create_csv_path_list(file_path: str) -> list:
+def create_csv_path_list(file_path: pathlib.Path) -> list:
     """
     Returns a list of .csv Paths in the file_path, including all subdirectories.
 
@@ -14,10 +15,14 @@ def create_csv_path_list(file_path: str) -> list:
         data_path = Path('.') / 'data'
         csv_path_list = create_csv_path_list(data_path)
     """
-    return_list = [x for x in file_path.glob("**/*.csv")]
-    print(f"{file_path} contains {len(return_list)} .csv files.")
-
-    return return_list
+    try:
+        return_list = [x for x in file_path.glob("**/*.csv")]
+    except AttributeError as err:
+        print(f"There is something wrong with the input, make sure it is a Path like object, error: {err}")
+    else:
+        print(f"{file_path} contains {len(return_list)} .csv files.")
+        if return_list:
+            return return_list
 
 
 def unique_key_check(df: pd.DataFrame, keys: list) -> bool:
