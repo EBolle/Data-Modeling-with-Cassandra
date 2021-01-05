@@ -77,8 +77,6 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-*.ipynb
-!notebooks/main.ipynb
 
 # IPython
 profile_default/
@@ -145,3 +143,6 @@ cython_debug/
 
 # Images
 *.jpg
+
+# jupyter notebooks
+*/.ipynb
