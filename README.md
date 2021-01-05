@@ -18,7 +18,7 @@ Based on the requests of the queries we have decided to create 3 tables:
 analytical purposes the items in the session are sorted
 - user_info_per_song: returns the first and last name of the users based on the song
 
-To give you a head start, hereby are some example queries you easily modify and use for your own purposes.
+To give you a head start, hereby are some example queries you can easily modify and use for your own purposes.
 
 ```sql
 SELECT artist
@@ -77,7 +77,7 @@ a (Anaconda) prompt, clone the project, and navigate to the project folder. Next
 ##### Anaconda
 ```bash
 conda env create -f environment.yml
-conda activate postgres
+conda activate cassandra
 ```
 
 ##### venv

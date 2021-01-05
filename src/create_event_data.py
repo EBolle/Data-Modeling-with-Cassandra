@@ -7,13 +7,10 @@ import pandas as pd
 
 class CreateEventData:
     """
-    Contains all methods and attributes to transform and combine raw .csv files to a new dataset,
+    Contains all methods and attributes to transform and combine raw .csv files to a Pandas dataframe,
     ready for insertion in the Cassandra database.
     """
-
-    def __init__(self, csv_path_list: str):
-        self.target_columns = ['artist', 'firstName', 'gender', 'itemInSession', 'lastName', 'length',
-                               'level', 'location', 'sessionId', 'song', 'userId', 'page']
+    def __init__(self, csv_path_list: list):
         self.csv_path_list = csv_path_list
         self.data_types = {'artist': str,
                            'firstName': str,
@@ -26,11 +23,13 @@ class CreateEventData:
                            'sessionId': int,
                            'song': str,
                            'userId': int}
+        self.target_columns = ['artist', 'firstName', 'gender', 'itemInSession', 'lastName', 'length',
+                               'level', 'location', 'sessionId', 'song', 'userId', 'page']
 
     def data_pipeline(self) -> pd.DataFrame:
         """
-        - transforms .csv file to a Pandas DataFrame
-        - check if the target columns are present in the dataframe, if so, returns only those
+        - transforms each .csv file to a Pandas DataFrame
+        - check if the target columns are present in the dataframe and returns only the records where songs are played
         - converts the data to the correct data types
         - appends all dataframes and returns a single dataframe
         """
@@ -66,7 +65,8 @@ class CreateEventData:
 
     def assert_target_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         """
-        Assert whether the target columns are present in the dataframe.
+        Assert whether the target columns are present in the dataframe, and return only the records where songs
+        were played.
         """
         df_columns_low = [x.lower() for x in df.columns]
         target_columns_low = [x.lower() for x in self.target_columns]

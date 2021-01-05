@@ -1,4 +1,5 @@
-"""Helper functions for various steps in the overall process."""
+"""Helper functions to create or validate data."""
+
 
 import pandas as pd
 
@@ -19,7 +20,7 @@ def create_csv_path_list(file_path: str) -> list:
     return return_list
 
 
-def unique_key_check(df: pd.DataFrame, keys: list) -> pd.DataFrame:
+def unique_key_check(df: pd.DataFrame, keys: list) -> bool:
     """
     Returns TRUE when the combination of keys is unique, these keys can then be used as primary index.
     """

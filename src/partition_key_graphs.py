@@ -7,13 +7,19 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 import seaborn as sns
 from src.create_event_data import CreateEventData
+from src.data_utils import create_csv_path_list
 
 
 class CreateGraphs:
+    """
+    Class that holds the attributes and methods to reproduce the 3 partition key accountability images
+    in notebooks/main.ipynb
+    """
     event_data_path = Path('..') / 'event_data'
 
     def __init__(self):
-        self.create_event_instance = CreateEventData(csv_path_list=self.event_data_path)
+        self.csv_path_list = create_csv_path_list(self.event_data_path)
+        self.create_event_instance = CreateEventData(csv_path_list=self.csv_path_list)
         self.event_df = self.create_event_instance.data_pipeline()
 
     def create_graph_query_1(self):

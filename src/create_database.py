@@ -8,7 +8,7 @@ from logger import logger
 class CreateDatabase:
     """
     This class initializes a local Cassandra instance including a 'udacity' keyspace, filled with tables
-    from the create_queries module.
+    from the statements in the create_queries list.
     """
     def __init__(self, create_queries: list, drop_queries: list):
         self.cluster = None
@@ -17,6 +17,14 @@ class CreateDatabase:
         self.session = None
 
     def create_database_pipeline(self) -> tuple:
+        """
+        - initialize the cluster and session
+        - setup the udacity keyspace
+        - drop tables if exists to guarantee freshly created tables
+        - create the tables
+
+        The cluster and session instances are returned so they can be used and closed after the database is created.
+        """
         logger.info("Create database pipeline started...")
 
         self.init_cluster_and_session()
