@@ -4,23 +4,65 @@
 
 Source: https://www.pexels.com
 
-After carefully analyzing the behaviour of our users the analytics team proposed a few very successful user stories
+After carefully analyzing the behaviour of our users, the analytics team proposed a few very successful user stories
 which significantly contributed to the growth of Sparkify. To avoid being perished by their own success, the analytics
-team needs a serious performance upgrade when it comes to querying the database. Since speed is the most important
+team needed a serious performance upgrade when it comes to querying the database. Since speed is the most important
 factor for the analytics teams, we have decided to create a Cassandra database, specifically optimized for certain
 queries.
 
 ### The queries and primary keys
 
-- query 1 ```sql```
-- query 2
-- query 3
+Based on the requests of the queries we have decided to create 3 tables:
+- session_info: returns the artist, song and the length of the song based on session id and item in session
+- user_info: returns the artist, song, and the first and last name of the user based on the user id and session id, for
+analytical purposes the items in the session are sorted
+- user_info_per_song: returns the first and last name of the users based on the song
 
-You can find a visual component in the main notebook. 
+To give you a head start, hereby are some example queries you easily modify and use for your own purposes.
+
+```sql
+SELECT artist
+,    song
+,    song_length
+
+FROM
+    session_info
+    
+WHERE
+    session_id=338
+and item_in_session=4
+```
+
+```sql
+SELECT artist
+,    song
+,    first_name
+,    last_name
+
+FROM
+    user_info
+    
+WHERE
+    user_id=10
+and session_id=182
+```
+
+```sql
+SELECT first_name
+,    last_name
+
+FROM
+    user_info_per_song
+    
+WHERE
+    song='All Hands Against His Own'
+```
 
 ### Instructions
 
-Before you can run the notebook, there are a few things you need to do:
+This project revolves around a single jupyter notebook, stored in notebooks/main.ipynb. This notebook includes every
+step in the process, additional explanation and comments when necessary, and visual support for choosing the partition
+keys. Before you can run the notebook, there are a few things you need to do:
 - create and activate a virtual environment
 - run the tests
 
@@ -51,11 +93,6 @@ pip install -r requirements.txt
 pytest -v
 ```
 
-### Start
-
-The complete project revolves around one jupyter notebook, stored in notebooks/main.ipynb. This notebook includes every
-step in the process, additional explanation and comments when necessary, and visual support for the primary keys.
-
 ### Contact
 
-In case of suggestions or remarks please contact the Data Engineering department
+In case of suggestions or remarks please contact the Data Engineering department.
