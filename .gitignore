@@ -144,5 +144,4 @@ cython_debug/
 # Images
 *.jpg
 
-# jupyter notebooks
-*/.ipynb
+/notebooks/check_tests.ipynb
