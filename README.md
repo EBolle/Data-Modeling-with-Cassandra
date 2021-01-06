@@ -89,6 +89,10 @@ pip install -r requirements.txt
 
 #### Tests
 
+To make the code more robust, several tests were added to guarantee the code works and keeps working as intended. Before
+you start exploring the notebook it is recommended to run the tests. Please make sure your virtual environment is 
+activated before you run the following command.
+
 ```bash
 pytest -v
 ```
