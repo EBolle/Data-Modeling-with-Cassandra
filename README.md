@@ -1,8 +1,4 @@
-## Speed is of the essence 
-
-<img src="https://images.pexels.com/photos/290470/pexels-photo-290470.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=800">
-
-Source: https://www.pexels.com
+# Speed is of the essence 
 
 After carefully analyzing the behaviour of our users, the analytics team proposed a few very successful user stories
 which significantly contributed to the growth of Sparkify. To avoid being perished by their own success, the analytics
@@ -10,7 +6,7 @@ team needed a serious performance upgrade when it comes to querying the database
 factor for the analytics teams, we have decided to create a Cassandra database, specifically optimized for certain
 queries.
 
-### The queries and primary keys
+## Example queries
 
 Based on the requests of the queries we have decided to create 3 tables:
 - session_info: returns the artist, song and the length of the song based on session id and item in session
@@ -58,45 +54,43 @@ WHERE
     song='All Hands Against His Own'
 ```
 
-### Instructions
+## Instructions
 
 This project revolves around a single jupyter notebook, stored in notebooks/main.ipynb. This notebook includes every
 step in the process, additional explanation and comments when necessary, and visual support for choosing the partition
 keys. Before you can run the notebook, there are a few things you need to do:
+
 - create and activate a virtual environment
 - run the tests
 
 Furthermore, note that the logic needed to execute the notebook is stored in the /src folder. The Python version used
 for this project is 3.8.5. 
 
-#### create and activate a virtual environment 
+### create and activate a virtual environment 
 
-You can either use Anaconda or venv to create the virtual environment. Regardless of your choice, you have to open
-a (Anaconda) prompt, clone the project, and navigate to the project folder. Next, enter the following:
+You can either use Anaconda or virtualenv to create the virtual environment, if you are not familiar with virtual
+environments please read this [article][virtual_envs] first.
 
-##### Anaconda
 ```bash
 conda env create -f environment.yml
 conda activate cassandra
-```
 
-##### venv
-```bash
 python -m venv venv
 venv\Scripts\Activate
 pip install -r requirements.txt 
 ```
 
-#### Tests
+### Tests
 
 To make the code more robust, several tests were added to guarantee the code works and keeps working as intended. Before
-you start exploring the notebook it is recommended to run the tests. Please make sure your virtual environment is 
-activated before you run the following command.
+you start exploring the notebook it is recommended to run the tests first.
 
 ```bash
 pytest -v
 ```
 
-### Contact
+## Contact
 
 In case of suggestions or remarks please contact the Data Engineering department.
+
+[virtual_envs]: https://realpython.com/python-virtual-environments-a-primer/
